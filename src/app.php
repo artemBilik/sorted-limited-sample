@@ -25,7 +25,7 @@ foreach (new DirectoryIterator(sprintf('%s/../files/', __DIR__)) as $file) {
 }
 $pool = new Pool(THREADS_NUMBER, SampleWorker::class, [$sample, $fileProvider, $sampleFactory, new AutoLoader()]);
 for ($i = 0; $i < THREADS_NUMBER; $i++) {
-    $pool->submit(new SampleTask(new AutoLoader()));
+    $pool->submit(new SampleTask());
 }
 $pool->shutdown();
 $result = new SplFileObject(__DIR__.'/../result.csv', 'w');

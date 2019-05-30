@@ -10,14 +10,6 @@ use Travelata\ArtemBilik\Exceptions\ReadFileException;
 
 class SampleTask extends Threaded
 {
-    /** @var AutoLoader  */
-    private $autoLoader;
-
-    public function __construct(AutoLoader $autoloader)
-    {
-        $this->autoLoader = $autoloader;
-    }
-
     public function run()
     {
         /** @var SampleWorker $worker */
