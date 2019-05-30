@@ -14,7 +14,7 @@ const THREADS_NUMBER = 16;
 require_once __DIR__.'/AutoLoader.php';
 
 (new AutoLoader())->register();
-
+$start = microtime(true);
 $sampleFactory = new BulkSortSampleFactory(1000, 20);
 $sample = $sampleFactory->create();
 $fileProvider = new ListFileProvider();
@@ -34,3 +34,4 @@ $csv = array_map(function (Product $product) {
     return $product->toCsv();
 }, $sample->getProducts());
 $result->fwrite(implode(PHP_EOL, $csv));
+printf("Parse in %.2f seconds" . PHP_EOL, microtime(true) - $start);

@@ -13,3 +13,4 @@ for ($i = 0; $i < 100; $i++) {
 		//
 	}
 }
+echo 'Generated 100 files of 200 000 lines each.' . PHP_EOL;
