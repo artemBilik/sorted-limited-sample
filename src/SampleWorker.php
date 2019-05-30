@@ -7,19 +7,19 @@ use Worker;
 
 class SampleWorker extends Worker
 {
-    /** @var Sample  */
+    /** @var SampleInterface  */
     private $sample;
-    /** @var FileProvider  */
+    /** @var FileProviderInterface  */
     private $provider;
-    /** @var SampleFactory  */
+    /** @var SampleFactoryInterface  */
     private $sampleFactory;
     /** @var AutoLoader  */
     private $autoLoader;
 
     public function __construct(
-        Sample $sample,
-        FileProvider $provider,
-        SampleFactory $sampleFactory,
+        SampleInterface $sample,
+        FileProviderInterface $provider,
+        SampleFactoryInterface $sampleFactory,
         AutoLoader $autoLoader
     ) {
         $this->sample = $sample;
@@ -32,17 +32,17 @@ class SampleWorker extends Worker
         $this->autoLoader->register();
     }
 
-    public function getSample(): Sample
+    public function getSample(): SampleInterface
     {
         return $this->sample;
     }
 
-    public function getProvider(): FileProvider
+    public function getProvider(): FileProviderInterface
     {
         return $this->provider;
     }
 
-    public function getSampleFactory(): SampleFactory
+    public function getSampleFactory(): SampleFactoryInterface
     {
         return $this->sampleFactory;
     }

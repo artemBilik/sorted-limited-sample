@@ -1,11 +1,13 @@
 <?php
 
-namespace Travelata\ArtemBilik;
+namespace Travelata\ArtemBilik\Samples;
 
 
 use Threaded;
+use Travelata\ArtemBilik\Product;
+use Travelata\ArtemBilik\SampleInterface;
 
-class Sample extends Threaded
+class BulkSortSample extends Threaded implements SampleInterface
 {
     /** @var Product[]  */
     private $data = [];
@@ -20,9 +22,7 @@ class Sample extends Threaded
         $this->uniqueSize = $uniqueSize;
     }
 
-    /**
-     * @return Product[]
-     */
+    /** {@inheritDoc} */
     public function getProducts(): array
     {
         $products = [];
@@ -32,10 +32,8 @@ class Sample extends Threaded
         return $products;
     }
 
-    /**
-     * @param Product[] $products
-     */
-    public function bulkPush(array $products): void
+    /** {@inheritDoc} */
+    public function push(array $products): void
     {
         foreach ($this->data as $key => $product) {
             $products[] = $product;

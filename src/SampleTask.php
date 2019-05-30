@@ -28,7 +28,7 @@ class SampleTask extends Threaded
         while (true) {
             /** @var ChunkFileReader|null $file */
             $file = null;
-            $provider->synchronized(function(FileProvider $provider) use (&$file) {
+            $provider->synchronized(function(FileProviderInterface $provider) use (&$file) {
                 try {
                     $file = new ChunkFileReader($provider->getNext());
                 } catch (FilesFinishedException $e) {
@@ -41,14 +41,14 @@ class SampleTask extends Threaded
             $cacheSample = $worker->getSampleFactory()->create();
             while (!$file->isEnd()) {
                 try {
-                    $cacheSample->bulkPush($file->read(100000));
+                    $cacheSample->push($file->read(100000));
                 } catch (ReadFileException $e) {
                     continue;
                 }
             }
             $products = $cacheSample->getProducts();
-            $sample->synchronized(function(Sample $sample) use (&$products) {
-                $sample->bulkPush($products);
+            $sample->synchronized(function(SampleInterface $sample) use (&$products) {
+                $sample->push($products);
             }, $sample);
         }
     }

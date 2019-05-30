@@ -6,22 +6,23 @@ namespace Travelata\ArtemBilik;
 use DirectoryIterator;
 use Pool;
 use SplFileObject;
+use Travelata\ArtemBilik\FileProviders\ListFileProvider;
+use Travelata\ArtemBilik\Samples\BulkSortSampleFactory;
 
-const THREADS_NUMBER = 10;
+const THREADS_NUMBER = 4;
 
 require_once __DIR__.'/AutoLoader.php';
 
 (new AutoLoader())->register();
 
-$sampleFactory = new SampleFactory(1000, 20);
+$sampleFactory = new BulkSortSampleFactory(1000, 20);
 $sample = $sampleFactory->create();
-$fileProvider = new FileProvider();
+$fileProvider = new ListFileProvider();
 foreach (new DirectoryIterator(sprintf('%s/../files/', __DIR__)) as $file) {
     if ($file->getExtension() === 'csv') {
         $fileProvider->addFile($file->getPathname());
     }
 }
-$start = microtime(true);
 $pool = new Pool(THREADS_NUMBER, SampleWorker::class, [$sample, $fileProvider, $sampleFactory, new AutoLoader()]);
 for ($i = 0; $i < THREADS_NUMBER; $i++) {
     $pool->submit(new SampleTask(new AutoLoader()));
@@ -33,4 +34,3 @@ $csv = array_map(function (Product $product) {
     return $product->toCsv();
 }, $sample->getProducts());
 $result->fwrite(implode(PHP_EOL, $csv));
-printf("Done for %.2f seconds" . PHP_EOL, microtime(true) - $start);

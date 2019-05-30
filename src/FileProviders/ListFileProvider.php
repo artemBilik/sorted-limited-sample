@@ -1,12 +1,13 @@
 <?php
 
-namespace Travelata\ArtemBilik;
+namespace Travelata\ArtemBilik\FileProviders;
 
 
 use Threaded;
 use Travelata\ArtemBilik\Exceptions\FilesFinishedException;
+use Travelata\ArtemBilik\FileProviderInterface;
 
-class FileProvider extends Threaded
+class ListFileProvider extends Threaded implements FileProviderInterface
 {
     /** @var string[] */
     private $files = [];
@@ -18,10 +19,7 @@ class FileProvider extends Threaded
         $this->files[] = $filePath;
     }
 
-    /**
-     * @return string
-     * @throws FilesFinishedException
-     */
+    /** {@inheritDoc} */
     public function getNext(): string
     {
         if ($this->position >= count($this->files)) {
