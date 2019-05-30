@@ -9,7 +9,7 @@ use SplFileObject;
 use Travelata\ArtemBilik\FileProviders\ListFileProvider;
 use Travelata\ArtemBilik\Samples\BulkSortSampleFactory;
 
-const THREADS_NUMBER = 4;
+const THREADS_NUMBER = 16;
 
 require_once __DIR__.'/AutoLoader.php';
 
