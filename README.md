@@ -10,4 +10,5 @@
 > cd /app && php generate.php
 5. Run script
 > cd /app/src && php app.php
-7.  See the result in /app/result.csv
+7.  See the result
+> /app/result.csv
